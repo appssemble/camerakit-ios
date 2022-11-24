@@ -36,11 +36,11 @@ extension CKFSession.FlashMode {
     
     var captureDeviceInput: AVCaptureDeviceInput? {
         didSet {
-            if let oldValue = oldValue {
-                self.session.removeInput(oldValue)
-            }
-            
-            if let captureDeviceInput = self.captureDeviceInput {
+            if let captureDeviceInput = self.captureDeviceInput, self.session.canAddInput(captureDeviceInput) {
+                if let oldValue = oldValue {
+                    self.session.removeInput(oldValue)
+                }
+                
                 self.session.addInput(captureDeviceInput)
             }
         }
